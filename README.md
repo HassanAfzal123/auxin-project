@@ -1,5 +1,7 @@
 # Auxin-project
 
+This project contains CRUD operations RESTful-Apis on the Covid Dataset.
+
 ## Dependencies
 
 - express (https://www.npmjs.com/package/express)
@@ -10,12 +12,28 @@
 
 ## Install npm modules
 
-**npm install**
+- npm install
 
 ## Start the script
 
-**npm start**
+- npm start
 
 ## Dataset Used
 
-Covid dataset: (https://github.com/owid/covid-19-data/blob/master/public/data/owid-covid-data.csv)
+- Covid dataset: (https://github.com/owid/covid-19-data/blob/master/public/data/owid-covid-data.csv)
+
+## Swagger
+
+- Index page route (/) is rendering a swagger json file that state all the RESTful Apis defined in this project
+
+## Testing Tools
+
+- Swagger and Postman are used for testing all the Apis
+
+## Approaches Used
+
+- To make the Api(s) memory efficient, streams are used. Not all data is stored in memory but chunk of data is handled so even large data files can be handled easily
+
+- Safe file handling approach is used. Old file data is not removed until update/delete operations are not conducted properly.
+
+- Reusability coding approach is used. Functions are created to avoid reuseability of code.
