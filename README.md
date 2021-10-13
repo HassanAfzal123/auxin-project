@@ -9,6 +9,7 @@ This project contains CRUD operations RESTful-Apis on the Covid Dataset.
 - csv-parser (https://www.npmjs.com/package/csv-parser)
 - csv-writer (https://www.npmjs.com/package/csv-writer)
 - dotenv (https://www.npmjs.com/package/dotenv)
+- swagger-ui-express (https://www.npmjs.com/package/swagger-ui-express)
 
 ## Install npm modules
 
@@ -24,7 +25,7 @@ This project contains CRUD operations RESTful-Apis on the Covid Dataset.
 
 ## Swagger
 
-- Index page route (/) is rendering a swagger json file that state all the RESTful Apis defined in this project
+- To visualize the RESTful Apis, swagger ui is added on route (/api-docs)
 
 ## Testing Tools
 
@@ -32,7 +33,7 @@ This project contains CRUD operations RESTful-Apis on the Covid Dataset.
 
 ## Approaches Used
 
-- To make the Api(s) memory efficient, streams are used. Not all data is stored in memory but chunk of data is handled so even large data files can be handled easily
+- To make the Api(s) memory efficient, streams are used. Not all data is stored in memory but chunk of data is handled so even large data files can be handled easily.
 
 - Safe file handling approach is used. Old file data is not removed until update/delete operations are not conducted properly.
 

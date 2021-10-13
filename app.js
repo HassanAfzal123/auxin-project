@@ -4,12 +4,20 @@ const csv = require('csv')
 const csvParser = require('csv-parser')
 const createCsvWriter = require('csv-writer').createObjectCsvWriter
 const EOL = require('os').EOL
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 require('dotenv').config()
 
 const app = express()
 
 //this line is required to parse the request body
 app.use(express.json())
+
+// Swagger UI
+app.use('/api-docs', swaggerUi.serve);
+
+//Swagger route
+app.get('/api-docs',swaggerUi.setup(swaggerDocument))
 
 /* Create - POST method */
 app.post('/data/add', async (req, res) => {
