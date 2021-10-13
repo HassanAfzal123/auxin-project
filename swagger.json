@@ -8,18 +8,16 @@
   "host": "localhost:3000",
   "basePath": "/data",
   "schemes": [
-    "https",
     "http"
   ],
   "paths": {
-    "/data/list/{rows}": {
+    "/list/{rows}": {
       "get": {
         "tags": [
           "GET"
         ],
         "summary": "Get covid list of records",
         "description": "Get the json object of rows in the dataset",
-        "operationId": "getData",
         "consumes": [
           "application/json"
         ],
