@@ -38,3 +38,5 @@ This project contains CRUD operations RESTful-Apis on the Covid Dataset.
 - Safe file handling approach is used. Old file data is not removed until update/delete operations are not conducted properly.
 
 - Reusability coding approach is used. Functions are created to avoid code redundancy.
+
+- Proper comments are used in the code to make code more self explanatory.

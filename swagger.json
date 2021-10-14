@@ -14,10 +14,11 @@
     "/list/{rows}": {
       "get": {
         "tags": [
-          "GET"
+          "LIST"
         ],
         "summary": "Get covid list of records",
         "description": "Get the json object of rows in the dataset",
+        "operationId": "getData",
         "consumes": [
           "application/json"
         ],
@@ -68,42 +69,548 @@
           }
         }
       }
+    },
+    "/add": {
+      "post": {
+        "tags": [
+          "ADD"
+        ],
+        "summary": "Add records to the dataset",
+        "description": "Add multiple records in the dataset",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "data",
+            "description": "Covid data to add.",
+            "schema": {
+              "$ref": "#/definitions/allCovidData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "msg": {
+                  "type": "object",
+                  "example": "Covid data added successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Data Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Invalid Data Format"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing required fields",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Provided data is missing required fields"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update": {
+      "patch": {
+        "tags": [
+          "UPDATE"
+        ],
+        "summary": "Update a record in the dataset",
+        "description": "To update a record in the dataset, provide location and date",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "location",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "data",
+            "description": "Covid data to add.",
+            "schema": {
+              "$ref": "#/definitions/covidData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "msg": {
+                  "type": "object",
+                  "example": "Covid data updated/deleted successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Data Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Invalid Data Format"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing required fields",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Provided data is missing required fields"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/delete": {
+      "delete": {
+        "tags": [
+          "DELETE"
+        ],
+        "summary": "Delete a record in the dataset based on location and date",
+        "description": "To delete records in the dataset, just provide location name and date",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "location",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "msg": {
+                  "type": "object",
+                  "example": "Covid data updated/deleted successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Date Format",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Invalid Date Format"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "boolean"
+                },
+                "msg": {
+                  "type": "string",
+                  "example": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
-    "Pet": {
+    "allCovidData": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/covidData"
+      }
+    },
+    "covidData": {
       "type": "object",
       "required": [
-        "name",
-        "photoUrls"
+        "continent",
+        "iso_code",
+        "location",
+        "date"
       ],
       "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "name": {
+        "iso_code": {
           "type": "string",
-          "example": "doggie"
+          "example": "PAK"
         },
-        "photoUrls": {
-          "type": "array",
-          "xml": {
-            "name": "photoUrl",
-            "wrapped": true
-          },
-          "items": {
-            "type": "string"
-          }
-        },
-        "status": {
+        "continent": {
           "type": "string",
-          "description": "pet status in the store",
-          "enum": [
-            "available",
-            "pending",
-            "sold"
-          ]
+          "example": "Asia"
+        },
+        "location": {
+          "type": "string",
+          "example": "Pakistan"
+        },
+        "date": {
+          "type": "string",
+          "example": "2021-10-14"
+        },
+        "total_cases": {
+          "type": "string",
+          "example": "10"
+        },
+        "new_cases": {
+          "type": "string",
+          "example": "5"
+        },
+        "new_cases_smoothed": {
+          "type": "string",
+          "example": "5"
+        },
+        "total_deaths": {
+          "type": "string",
+          "example": "2"
+        },
+        "new_deaths": {
+          "type": "string",
+          "example": "2"
+        },
+        "new_deaths_smoothed": {
+          "type": "string",
+          "example": "2"
+        },
+        "total_cases_per_million": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "new_cases_per_million": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "new_cases_smoothed_per_million": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "total_deaths_per_million": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "new_deaths_per_million": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "new_deaths_smoothed_per_million": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "reproduction_rate": {
+          "type": "string",
+          "example": "0.10"
+        },
+        "icu_patients": {
+          "type": "string",
+          "example": "2"
+        },
+        "icu_patients_per_million": {
+          "type": "string",
+          "example": "0.02"
+        },
+        "hosp_patients": {
+          "type": "string",
+          "example": "10"
+        },
+        "hosp_patients_per_million": {
+          "type": "string",
+          "example": "0.10"
+        },
+        "weekly_icu_admissions": {
+          "type": "string",
+          "example": "1"
+        },
+        "weekly_icu_admissions_per_million": {
+          "type": "string",
+          "example": "0.01"
+        },
+        "weekly_hosp_admissions": {
+          "type": "string",
+          "example": "1"
+        },
+        "weekly_hosp_admissions_per_million": {
+          "type": "string",
+          "example": "0.02"
+        },
+        "new_tests": {
+          "type": "string",
+          "example": "50"
+        },
+        "total_tests": {
+          "type": "string",
+          "example": "150"
+        },
+        "total_tests_per_thousand": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "new_tests_per_thousand": {
+          "type": "string",
+          "example": "0.08"
+        },
+        "new_tests_smoothed": {
+          "type": "string",
+          "example": "2"
+        },
+        "new_tests_smoothed_per_thousand": {
+          "type": "string",
+          "example": "0.02"
+        },
+        "positive_rate": {
+          "type": "string",
+          "example": "30"
+        },
+        "tests_per_case": {
+          "type": "string",
+          "example": "0.2"
+        },
+        "tests_units": {
+          "type": "string",
+          "example": "10"
+        },
+        "total_vaccinations": {
+          "type": "string",
+          "example": "10000"
+        },
+        "people_vaccinated": {
+          "type": "string",
+          "example": "1000"
+        },
+        "people_fully_vaccinated": {
+          "type": "string",
+          "example": "200"
+        },
+        "total_boosters": {
+          "type": "string",
+          "example": "100000"
+        },
+        "new_vaccinations": {
+          "type": "string",
+          "example": "10000"
+        },
+        "new_vaccinations_smoothed": {
+          "type": "string",
+          "example": "1000"
+        },
+        "total_vaccinations_per_hundred": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "people_vaccinated_per_hundred": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "people_fully_vaccinated_per_hundred": {
+          "type": "string",
+          "example": "0.10"
+        },
+        "total_boosters_per_hundred": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "new_vaccinations_smoothed_per_million": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "stringency_index": {
+          "type": "string",
+          "example": "0.21"
+        },
+        "population": {
+          "type": "string",
+          "example": "30000020"
+        },
+        "population_density": {
+          "type": "string",
+          "example": "54.2"
+        },
+        "median_age": {
+          "type": "string",
+          "example": "18.2"
+        },
+        "aged_65_older": {
+          "type": "string",
+          "example": "7.5"
+        },
+        "aged_70_older": {
+          "type": "string",
+          "example": "1.524"
+        },
+        "gdp_per_capita": {
+          "type": "string",
+          "example": "1800.2"
+        },
+        "extreme_poverty": {
+          "type": "string",
+          "example": "18012"
+        },
+        "cardiovasc_death_rate": {
+          "type": "string",
+          "example": "500.25"
+        },
+        "diabetes_prevalence": {
+          "type": "string",
+          "example": "18.2"
+        },
+        "female_smokers": {
+          "type": "string",
+          "example": "2.562"
+        },
+        "male_smokers": {
+          "type": "string",
+          "example": "18.2"
+        },
+        "handwashing_facilities": {
+          "type": "string",
+          "example": "36.231"
+        },
+        "hospital_beds_per_thousand": {
+          "type": "string",
+          "example": "0.5"
+        },
+        "life_expectancy": {
+          "type": "string",
+          "example": "65.2"
+        },
+        "human_development_index": {
+          "type": "string",
+          "example": "0.511"
+        },
+        "excess_mortality_cumulative_absolute": {
+          "type": "string",
+          "example": "0.242"
+        },
+        "excess_mortality_cumulative": {
+          "type": "string",
+          "example": "0.395"
+        },
+        "excess_mortality": {
+          "type": "string",
+          "example": "10231.123"
+        },
+        "excess_mortality_cumulative_per_million": {
+          "type": "string",
+          "example": "0.242"
         }
       }
     }

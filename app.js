@@ -35,10 +35,10 @@ app.post('/data/add', async (req, res) => {
 
             //Validate date format
             if(!isValidDate(covidData.date))
-                return res.status(403).send({error: true, msg: 'Invalid date format'})
+                return res.status(400).send({error: true, msg: 'Invalid date format'})
         }
     } catch (err) {
-        return res.status(403).send({error: true, msg: 'Invalid data format'})
+        return res.status(400).send({error: true, msg: 'Invalid data format'})
     }
 
     let responseObj = await addData(covidDataArr)
@@ -46,7 +46,7 @@ app.post('/data/add', async (req, res) => {
     if(responseObj.success) 
         res.status(200).send(responseObj)
     else
-        res.status(403).send(responseObj)
+        res.status(500).send(responseObj)
 })
 
 /* Read - GET method */
@@ -73,8 +73,12 @@ app.patch('/data/update', async (req, res) => {
 
     //Validate date format
     if(!isValidDate(date) || !isValidDate(covidUpdatedData.date))
-        return res.status(403).send({error: true, msg: 'Invalid date format'})
+        return res.status(400).send({error: true, msg: 'Invalid date format'})
 
+    //Checking required fields
+    if (covidUpdatedData.iso_code == null || covidUpdatedData.continent == null || covidUpdatedData.location == null || covidUpdatedData.date == null) {
+        return res.status(401).send({error: true, msg: 'Provided data is missing required fields'})
+    }
     
     //Create transformation function
     csvHeaders = await getCsvHeaders()
@@ -106,7 +110,7 @@ app.delete('/data/delete', async (req, res) => {
 
     //Validate date format
     if(!isValidDate(date))
-        return res.status(403).send({error: true, msg: 'Invalid date format'})
+        return res.status(400).send({error: true, msg: 'Invalid date format'})
     
     //Create transformation function
     const transform = csv.transform((row, cb) => {        
